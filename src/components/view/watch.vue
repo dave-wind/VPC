@@ -24,9 +24,10 @@
 </template>
 
 <script>
-import api from '../api/weather';
+import api from '@/api/weather';
 
 export default {
+  name: 'watch',
   data() {
     return {
       cityVal: '',

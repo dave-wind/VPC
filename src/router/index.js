@@ -1,18 +1,29 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/watch',
-      component: () => import('@/components/watch.vue'),
+      path: '/',
+      redirect: {path: '/watch'},
     },
     {
-      path: '/render',
-      component: () => import('@/components/render.vue'),
+      path: '/',
+      component: () => import('@/components/common/Home.vue'),
+      children: [
+        {
+          path: '/watch',
+          component: () => import('@/components/view/watch.vue'),
+        },
+        {
+          path: '/render',
+          component: () => import('@/components/view/render.vue'),
+        },
+      ],
     },
     {
       path: '/404',

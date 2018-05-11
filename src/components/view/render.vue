@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-  import btnRender from './btn-render';
+  import btnRender from '../render/btn-render';
 
   export default {
     components: {
