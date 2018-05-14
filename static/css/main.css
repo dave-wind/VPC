@@ -20,7 +20,7 @@ a {
     text-decoration: none
 }
 
-.content-box {
+.content-wrap {
     position: absolute;
     left: 250px;
     right: 0;
