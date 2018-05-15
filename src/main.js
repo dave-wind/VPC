@@ -8,10 +8,12 @@ import './assets/theme-dave/index.css';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import './globar';
+import Tools from './tools';
 
 NProgress.configure({showSpinner: false});
 
 Vue.use(ElementUI);
+Vue.use(Tools);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

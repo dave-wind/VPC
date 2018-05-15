@@ -3,3 +3,4 @@
 /dist/
 /*.js
 src/util.js
+src/dave.js

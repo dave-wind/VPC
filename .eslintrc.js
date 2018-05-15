@@ -30,6 +30,8 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
+    // const require
+    'import/newline-after-import': 'off',
     // indent close
     'indent': 0,
     // const isJedi = luke['jedi']; == > const isJedi = luke.jedi;

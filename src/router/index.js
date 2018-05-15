@@ -12,6 +12,10 @@ export default new Router({
       redirect: {path: '/watch'},
     },
     {
+      path: '/login',
+      component: () => import('@/components/common/Login.vue'),
+    },
+    {
       path: '/',
       component: () => import('@/components/common/Home.vue'),
       children: [
