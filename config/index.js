@@ -10,6 +10,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/mock': {
+        target: 'https://www.easy-mock.com/mock/5af52ce18efab658654cbbfa/dave/',
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          '^/mock': '/'
+        }
+      },
       '/api': {
         target: 'https://www.sojson.com/',
         changeOrigin: true,

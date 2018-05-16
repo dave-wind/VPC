@@ -4,7 +4,8 @@
 
 import request from './request';
 const api = {
-  getLogin: (para) => request.post('login', para),
+  getLogin: (para, cb) => request.post('/mock/login', para).then(cb),
+  getUser: (cb) => request.get('/mock/sign').then(cb),
 };
 export default api;
 

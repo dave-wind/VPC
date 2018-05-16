@@ -6,6 +6,7 @@ import router from './router';
 import ElementUI from 'element-ui';
 import './assets/theme-dave/index.css';
 import NProgress from 'nprogress';
+import store from './store/index';
 import 'nprogress/nprogress.css';
 import './globar';
 import Tools from './tools';
@@ -16,6 +17,7 @@ Vue.use(ElementUI);
 Vue.use(Tools);
 Vue.config.productionTip = false;
 
+Vue.prototype.$store = store;
 /* eslint-disable no-new */
 new Vue({
   router,

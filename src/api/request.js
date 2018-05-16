@@ -3,16 +3,13 @@
  */
 import Fly from 'flyio';
 import NProgress from 'nprogress';
-import { Notification } from 'element-ui';
+import {Notification} from 'element-ui';
 const request = new Fly();
 
 // 请求拦截器
 request.interceptors.request.use((response) => {
-  const res = response;
   // 给所有请求添加自定义header
   // request.headers["X-Tag"] = "flyio";
-  res.baseURL = 'https://www.easy-mock.com/mock/5af52ce18efab658654cbbfa/dave/';
-  res.url += request.baseURL;
   NProgress.start();
   return response;
 });

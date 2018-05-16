@@ -8,7 +8,7 @@
     <div class="login-wrap">
       <div class="ms-login">
         <div class="ms-title">VPC</div>
-        <div class="introduce">Vuex Permission Control</div>
+        <div class="introduce">Vue Permission Control</div>
         <el-form :model="ruleForm"
                  :rules="rules"
                  ref="ruleForm"
@@ -31,8 +31,8 @@
 </template>
 <script>
   import Dave from '../../dave';
-  import api from '@/api/common';
   import request from '@/api/request';
+  import api from '@/api/common';
 
   const model = {
     username: 'dave',
@@ -56,17 +56,17 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            api.getLogin(this.ruleForm).then((res) => {
-              this.saveToken(res);
+            api.getLogin(this.ruleForm, ({token}) => {
+              this.handleToken(token);
             });
           }
         });
       },
-      saveToken(res) {
-        if (res.token) {
-          request.config.headers['Authorization'] = res.token;
-//          this.$http.defaults.headers.common['Authorization'] = res.token;
-          localStorage.setItem('token', res.token);
+      handleToken(token) {
+        if (token) {
+          request.config.headers['Authorization'] = token;
+          sessionStorage.setItem('token', token);
+          this.$emit('login', this.$router.currentRoute.query.from || '/');
         }
       },
     },
