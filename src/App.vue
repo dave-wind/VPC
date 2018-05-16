@@ -6,6 +6,8 @@
 
 <script>
   import {mapGetters} from 'vuex';
+  import fullPath from './router/fullPath';
+
   export default {
     name: 'App',
     data() {
@@ -17,13 +19,12 @@
       }),
     },
     methods: {
-      login(newPath) {
-        console.log(233);
-        this.$store.dispatch('GET_USER_INFO', () => {
-          // 重定向
-          console.log(newPath);
-          console.log(this.userInfo);
-        });
+      signin() {
+        console.log('signed');
+      },
+      async login() {
+        await this.$store.dispatch('GET_USER_INFO');
+        await this.signin();
       },
       logout() {
       },

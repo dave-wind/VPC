@@ -4,6 +4,7 @@
 
 import request from './request';
 const api = {
+  getMock: () => request.get('/mock/demo'),
   getLogin: (para, cb) => request.post('/mock/login', para).then(cb),
   getUser: (cb) => request.get('/mock/sign').then(cb),
 };

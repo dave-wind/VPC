@@ -16,7 +16,9 @@ request.interceptors.request.use((response) => {
 
 // 响应拦截器
 request.interceptors.response.use((response, promise) => {
-  Notification.success(response.data.msg);
+  if (response.data.msg) {
+    Notification.success(response.data.msg);
+  }
   NProgress.done();
   return promise.resolve(response.data);
 }, (err, promise) => {

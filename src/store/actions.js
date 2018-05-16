@@ -3,15 +3,27 @@
  */
 import api from '@/api/common';
 
+/**
+ * can not write : typeof cb === 'function' && cb();
+ * Because Expected an assignment or function call and instead saw an expression
+ * call back you can use cb ,but async is the best method for you example: GET_USER_INFO in APP.vue
+ */
+const GET_DEMO = async ({commit}, cb) => {
+  try {
+    const res = await api.getMock();
+    commit('SET_DEMO', res.data.msg);
+    if (typeof cb === 'function') {
+      cb();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 export default {
-  GET_USER_INFO: ({commit}, cb) => {
+  GET_DEMO,
+  GET_USER_INFO: ({commit}) => {
     api.getUser((res) => {
-      commit('SET_USER_INFO', res);
-      // can not write : typeof cb === 'function' && cb();
-      // Because Expected an assignment or function call and instead saw an expression
-      if (typeof cb === 'function') {
-        cb();
-      }
+      commit('SET_USER_INFO', res.userInfo);
     });
   },
 };
