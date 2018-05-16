@@ -3,7 +3,7 @@
     <div class="collapse-btn">
       <i class="el-icon-menu"></i>
     </div>
-    <div class="logo">dave admin</div>
+    <div class="logo">{{ project }}</div>
     <div class="header-right">
       <div class="header-user-con">
         <div class="user-avator">
@@ -27,6 +27,7 @@
   export default {
     data() {
       return {
+        project: 'dave admin',
         username: 'dave wind',
       };
     },

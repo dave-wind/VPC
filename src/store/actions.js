@@ -21,9 +21,12 @@ const GET_DEMO = async ({commit}, cb) => {
 };
 export default {
   GET_DEMO,
-  GET_USER_INFO: ({commit}) => {
+  GET_USER_INFO: ({commit}, cb) => {
     api.getUser((res) => {
       commit('SET_USER_INFO', res.userInfo);
+      if (typeof cb === 'function') {
+        cb();
+      }
     });
   },
 };

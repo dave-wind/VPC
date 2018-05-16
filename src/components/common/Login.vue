@@ -65,7 +65,7 @@
       handleToken(token) {
         if (token) {
           request.config.headers['Authorization'] = token;
-          sessionStorage.setItem('token', token);
+          localStorage.setItem('token', token);
           this.$emit('login', this.$router.currentRoute.query.from || '/');
         }
       },

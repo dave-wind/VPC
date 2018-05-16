@@ -30,6 +30,8 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
+    // () => { return;}
+    'consistent-return': 0,
     // const require
     'import/newline-after-import': 'off',
     // indent close
