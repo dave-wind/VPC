@@ -32,30 +32,39 @@
         await this.signin();
       },
       signin() {
-        const menus = this.getAllowRoute(this.userInfo.permis);
+        const menus = this.getAllowRoute(fullPath, this.userInfo.permis);
+        console.log(menus);
         this.$router.addRoutes(menus.concat([{
           path: '*',
           redirect: '/404',
         }]));
       },
-      getAllowRoute(userRoutes) {
+      getAllowRoute(allRoutes, userRoutes) {
         if (!userRoutes) {
           console.warn('user permission is wrong');
           return false;
         }
         const arr = [];
-        // 最高权限
-        if (userRoutes.indexOf('*') > -1) {
-          arr.push(fullPath);
+        if (userRoutes.length === 0) {
           return arr;
         }
-        fullPath.forEach((route) => {
-          if (Array.isArray(route.children) && route.children.length > 0) {
-            route.children.forEach((child) => {
-              if (child.meta.performance.indexOf(userRoutes) > -1) {
-                arr.push(route);
-              }
-            });
+        allRoutes.forEach((item) => {
+          const route = item;
+          // 最高权限
+          if (userRoutes.indexOf('*') > -1) {
+            arr.push(route);
+            return false;
+          }
+          // 有children 的
+          if (Array.isArray(route.children)) {
+            route.children = this.getAllowRoute(route.children, userRoutes);
+            if (route.children.length > 0) {
+              arr.push(route);
+            }
+          }
+          // 匹配到的
+          if (userRoutes.indexOf(route.meta.permission) > -1) {
+            arr.push(route);
           }
         });
         return arr;

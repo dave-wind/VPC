@@ -26,6 +26,7 @@ const fullPath = [
     component: () => import('@/components/common/Home.vue'),
     children: [
       {
+        path: '/allocation',
         component: () => import('@/components/view/allocation.vue'),
         meta: {permission: ['root-allocation']},
       },
