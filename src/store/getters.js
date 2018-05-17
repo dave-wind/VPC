@@ -8,5 +8,8 @@ export default {
   getUserInfo: (state) => {
     return state.userInfo;
   },
+  getMenus: (state) => {
+    return state.menus;
+  },
 };
 

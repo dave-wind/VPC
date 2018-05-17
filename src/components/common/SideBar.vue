@@ -1,59 +1,45 @@
 <template>
   <div class="sidebar">
-    <el-menu class="sidebar-el-menu">
+    <el-menu class="sidebar-el-menu"
+             :default-active="$route.path"
+             unique-opened router>
+      <!--菜单栏 规定都要有子集-->
       <div
-        v-for="(item,index) in columns"
+        v-for="(item,index) in menus"
         :key="index">
-        <div v-if="item.subs">
-          <el-submenu :index="item.index">
+        <!--v-if=item.children-->
+        <div v-if=item.children>
+          <el-submenu :index="item.path">
             <template slot="title">
-              <i :class="item.icon"></i><span slot="title">{{item.title}}</span>
+              <i :class="item.icon"></i><span slot="title">{{item.name}}</span>
             </template>
             <el-menu-item
-              v-for="(jtem,j) in item.subs"
-              :index="jtem.index"
-              :key="j">{{jtem.title}}
+              v-for="(jtem,j) in item.children"
+              :index="jtem.path"
+              :key="j">{{jtem.name}}
             </el-menu-item>
           </el-submenu>
         </div>
-        <!--俩部分 无子集的-->
-        <el-menu-item :index="item.index" v-else>
-          <i :class="item.icon"></i>
-          <span slot="title">{{item.title}}</span>
-        </el-menu-item>
+        <!--&lt;!&ndash;无子集的 结构&ndash;&gt;-->
+        <!--<el-menu-item :index="item.path" v-else>-->
+          <!--<i :class="item.icon"></i>-->
+          <!--<span slot="title">{{item.title}}</span>-->
+        <!--</el-menu-item>-->
       </div>
     </el-menu>
   </div>
 </template>
 <script>
+  import {mapGetters} from 'vuex';
   export default {
     data() {
       return {
-        columns: [
-          {
-            icon: 'el-icon-message',
-            index: '1',
-            title: '导航一',
-            subs: [
-              {
-                index: 'form',
-                title: '页面一',
-              },
-              {
-                index: 'editor',
-                title: '页面二',
-              },
-            ],
-          },
-          {
-            icon: 'el-icon-tickets',
-            index: '2',
-            title: '导航二',
-          },
-        ],
       };
     },
     computed: {
+      ...mapGetters({
+        menus: 'getMenus',
+      }),
       onRoutes() {
         return this.$route.path.replace('/', '');
       },

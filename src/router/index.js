@@ -1,42 +1,35 @@
-import Vue from 'vue';
 import Router from 'vue-router';
-
+import Vue from 'vue';
 
 Vue.use(Router);
 
-export default new Router({
+const baseRoute = [
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/components/common/Login.vue'),
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('@/components/view/404.vue'),
+  },
+  {
+    path: '/403',
+    name: '403',
+    component: () => import('@/components/view/403.vue'),
+  },
+];
+
+const router = new Router({
   mode: 'history',
-  routes: [
-    {
-      path: '/',
-      redirect: {path: '/watch'},
-    },
-    {
-      path: '/login',
-      component: () => import('@/components/common/Login.vue'),
-    },
-    {
-      path: '/',
-      component: () => import('@/components/common/Home.vue'),
-      children: [
-        {
-          path: '/watch',
-          component: () => import('@/components/view/watch.vue'),
-        },
-        {
-          path: '/render',
-          component: () => import('@/components/view/render.vue'),
-        },
-      ],
-    },
-    {
-      path: '/404',
-      component: () => import('@/404.vue'),
-    },
-    {
-      path: '*',
-      hidden: true,
-      redirect: {path: '/404'},
-    },
-  ],
+  routes: baseRoute,
 });
+
+router.beforeEach((to, from, next) => {
+  const routeName = to.name;
+  window.document.title = to.name ? routeName : 'VPC';
+  next();
+});
+export default router;
+

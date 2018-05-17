@@ -3,7 +3,7 @@
     <div class="collapse-btn">
       <i class="el-icon-menu"></i>
     </div>
-    <div class="logo">{{ project }}</div>
+    <div class="logo">{{project}}</div>
     <div class="header-right">
       <div class="header-user-con">
         <div class="user-avator">
@@ -13,7 +13,7 @@
                      trigger="click"
                      @command="handleCommand">
                     <span class="el-dropdown-link">
-                        {{username}} <i class="el-icon-caret-bottom"></i>
+                        {{userInfo.name}} <i class="el-icon-caret-bottom"></i>
                     </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="logout">退出登录</el-dropdown-item>
@@ -24,12 +24,18 @@
   </div>
 </template>
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
     data() {
       return {
         project: 'dave admin',
-        username: 'dave wind',
       };
+    },
+    computed: {
+      ...mapGetters({
+        userInfo: 'getUserInfo',
+      }),
     },
     methods: {
       handleCommand(command) {

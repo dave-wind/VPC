@@ -8,8 +8,12 @@ const SET_DEMO = (state, v) => {
 const SET_USER_INFO = (state, v) => {
   state.userInfo = {...v};
 };
+const SET_MENUS = (state, v) => {
+  state.menus = [...v];
+};
 
 export default {
   SET_DEMO,
   SET_USER_INFO,
+  SET_MENUS,
 };

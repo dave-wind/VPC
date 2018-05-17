@@ -4,5 +4,6 @@
 export default {
   demo: '',
   userInfo: {},
+  menus: [],
 };
 

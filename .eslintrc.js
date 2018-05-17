@@ -30,6 +30,8 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
+    // else ==> else if can use
+    'no-lonely-if': 0,
     // () => { return;}
     'consistent-return': 0,
     // const require
@@ -44,7 +46,7 @@ module.exports = {
     // disallow reassignment of function parameters
     // disallow parameter object manipulation except for specific exclusions
     'no-param-reassign': ['error', {
-      props: true,
+      props: false,
       ignorePropertyModificationsFor: [
         'state', // for vuex state
         'acc', // for reduce accumulators

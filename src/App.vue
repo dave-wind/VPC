@@ -27,29 +27,32 @@
       }),
     },
     methods: {
-      async login() {
-        await this.$store.dispatch('GET_USER_INFO');
-        await this.signin();
+      login(newPath) {
+        this.$store.dispatch('GET_USER_INFO', () => {
+          this.signin(() => {
+            this.$router.push({path: newPath || '/'});
+          });
+        });
       },
-      signin() {
+      signin(cb) {
         const menus = this.getAllowRoute(fullPath, this.userInfo.permis);
-        console.log(menus);
+        // 后端规定 返回权限为 空数组 递归完成 menus 依旧不匹配 直接 403
+        if (Array.isArray(menus) && menus.length === 0) {
+          this.$router.push({path: '/403'});
+          return false;
+        }
         this.$router.addRoutes(menus.concat([{
           path: '*',
           redirect: '/404',
         }]));
+        this.$store.commit('SET_MENUS', menus);
+        if (typeof cb === 'function' && cb) {
+          cb();
+        }
       },
       getAllowRoute(allRoutes, userRoutes) {
-        if (!userRoutes) {
-          console.warn('user permission is wrong');
-          return false;
-        }
         const arr = [];
-        if (userRoutes.length === 0) {
-          return arr;
-        }
-        allRoutes.forEach((item) => {
-          const route = item;
+        allRoutes.forEach((route) => {
           // 最高权限
           if (userRoutes.indexOf('*') > -1) {
             arr.push(route);
@@ -61,10 +64,10 @@
             if (route.children.length > 0) {
               arr.push(route);
             }
-          }
-          // 匹配到的
-          if (userRoutes.indexOf(route.meta.permission) > -1) {
-            arr.push(route);
+          } else {
+            if (userRoutes.indexOf(route.meta.permission[0]) > -1) {
+              arr.push(route);
+            }
           }
         });
         return arr;

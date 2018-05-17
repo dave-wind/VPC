@@ -35,7 +35,7 @@
   import api from '@/api/common';
 
   const model = {
-    username: 'dave',
+    username: '',
     password: '1234',
   };
   export default {
@@ -51,6 +51,7 @@
     },
     created() {
       Dave();
+      localStorage.clear();
     },
     methods: {
       submitForm(formName) {
