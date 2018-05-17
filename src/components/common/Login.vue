@@ -46,12 +46,12 @@
           username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
           password: [{required: true, message: '密码不能为空', trigger: 'blur'}],
         },
-        token: '',
       };
     },
     created() {
       Dave();
-      localStorage.clear();
+      // 直接子组件直接调用 父组件定义的方法
+      this.$emit('clearData');
     },
     methods: {
       submitForm(formName) {

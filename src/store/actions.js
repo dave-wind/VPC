@@ -29,4 +29,10 @@ export default {
       }
     });
   },
+  CLEAR_STORE: ({commit}, cb) => {
+    commit('CLEAR_STORE');
+    if (typeof cb === 'function') {
+      cb();
+    }
+  },
 };

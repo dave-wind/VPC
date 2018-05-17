@@ -11,9 +11,13 @@ const SET_USER_INFO = (state, v) => {
 const SET_MENUS = (state, v) => {
   state.menus = [...v];
 };
-
+const CLEAR_STORE = (state) => {
+  state.userInfo = {};
+  state.menus = [];
+};
 export default {
   SET_DEMO,
   SET_USER_INFO,
   SET_MENUS,
+  CLEAR_STORE,
 };

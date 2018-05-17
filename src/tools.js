@@ -1,10 +1,17 @@
 /**
  * Created by dave on 2018/5/15.
  */
+
 const install = (Vue) => {
-  // airbnb-base can't use arguments directly, you know ?
-  const Dave = Vue;
-  Dave.prototype.disabledDate = {
+  /**
+   * 全局变量
+   */
+  Vue.prototype.collapse = false;
+  // airbnb-base can't use arguments directly, but I close this you know ?
+  /**
+   * 全局函数
+   */
+  Vue.prototype.disabledDate = {
     disabledDate(time) {
       return time.getTime() < Date.now() - 8.64e7;
     },

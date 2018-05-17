@@ -1,8 +1,9 @@
 <template>
   <div class="sidebar">
     <el-menu class="sidebar-el-menu"
+             unique-opened router
              :default-active="$route.path"
-             unique-opened router>
+             :collapse="collapse">
       <!--菜单栏 规定都要有子集-->
       <div
         v-for="(item,index) in menus"
@@ -20,10 +21,10 @@
             </el-menu-item>
           </el-submenu>
         </div>
-        <!--&lt;!&ndash;无子集的 结构&ndash;&gt;-->
+        <!--无子集的 结构-->
         <!--<el-menu-item :index="item.path" v-else>-->
-          <!--<i :class="item.icon"></i>-->
-          <!--<span slot="title">{{item.title}}</span>-->
+        <!--<i :class="item.icon"></i>-->
+        <!--<span slot="title">{{item.name}}</span>-->
         <!--</el-menu-item>-->
       </div>
     </el-menu>
@@ -31,9 +32,12 @@
 </template>
 <script>
   import {mapGetters} from 'vuex';
+  import EventBus from '@/bus';
+
   export default {
     data() {
       return {
+        collapse: false,
       };
     },
     computed: {
@@ -43,6 +47,11 @@
       onRoutes() {
         return this.$route.path.replace('/', '');
       },
+    },
+    mounted() {
+      EventBus.$on('collapse', (val) => {
+        this.collapse = val;
+      });
     },
   };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="collapse-btn">
+    <div class="collapse-btn" @click="collapseChage">
       <i class="el-icon-menu"></i>
     </div>
     <div class="logo">{{project}}</div>
@@ -16,7 +16,7 @@
                         {{userInfo.name}} <i class="el-icon-caret-bottom"></i>
                     </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+            <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -25,6 +25,7 @@
 </template>
 <script>
   import {mapGetters} from 'vuex';
+  import EventBus from '@/bus';
 
   export default {
     data() {
@@ -40,8 +41,15 @@
     methods: {
       handleCommand(command) {
         if (command === 'logout') {
-          console.log('退出');
+          console.log(command);
         }
+      },
+      logout() {
+        EventBus.$emit('logOut');
+      },
+      collapseChage() {
+        this.collapse = !this.collapse;
+        EventBus.$emit('collapse', this.collapse);
       },
     },
   };

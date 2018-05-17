@@ -16,6 +16,7 @@
 <script>
   import dHeader from '../common/Header';
   import dSidebar from '../common/SideBar';
+  import EventBus from '@/bus';
 
   export default {
     components: {
@@ -25,6 +26,11 @@
       return {
         collapse: false,
       };
+    },
+    mounted() {
+      EventBus.$on('collapse', (val) => {
+        this.collapse = val;
+      });
     },
   };
 </script>
