@@ -47,11 +47,6 @@ module.exports = {
     // disallow parameter object manipulation except for specific exclusions
     'no-param-reassign': ['error', {
       props: false,
-      ignorePropertyModificationsFor: [
-        'state', // for vuex state
-        'acc', // for reduce accumulators
-        'e' // for e.returnvalue
-      ]
     }],
     'no-console': 0,
     // arrow function can no {}
