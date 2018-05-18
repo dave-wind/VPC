@@ -6,7 +6,7 @@ const install = (Vue) => {
   /**
    * 全局变量
    */
-  Vue.prototype.collapse = false;
+  Vue.prototype.flag = false;
   // airbnb-base can't use arguments directly, but I close this you know ?
   /**
    * 全局函数

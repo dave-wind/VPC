@@ -11,13 +11,13 @@ const fullPath = [
     children: [
       {
         path: '/watch',
-        name: 'vue watch',
+        name: 'vue观察',
         component: () => import('@/components/view/watch.vue'),
         meta: {permission: ['high-watch']},
       },
       {
         path: '/render',
-        name: 'render 渲染',
+        name: 'render渲染',
         component: () => import('@/components/view/render.vue'),
         meta: {permission: ['high-render']},
       },

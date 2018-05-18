@@ -4,13 +4,12 @@
              unique-opened router
              :default-active="$route.path"
              :collapse="collapse">
-      <!--菜单栏 规定都要有子集-->
-      <template>
-        <div v-for="(item,index) in list"
-             :key="index">
-          <el-submenu v-if=item.children :index="item.path">
+      <!--菜单栏 规定都要有子集 :index 必填index-->
+      <template v-for="(item,index) in menus">
+        <template v-if=item.children>
+          <el-submenu :index="index" :key="index">
             <template slot="title">
-              <i :class="item.icon"></i><span slot-scope="title">{{item.name}}</span>
+              <i :class="item.icon"></i><span slot="title">{{item.name}}</span>
             </template>
             <el-menu-item
               v-for="(jtem,j) in item.children"
@@ -18,25 +17,15 @@
               :key="j">{{jtem.name}}
             </el-menu-item>
           </el-submenu>
-          <!--无子集的 结构-->
-          <!--<el-menu-item :index="item.path" v-else>-->
-          <!--<i :class="item.icon"></i>-->
-          <!--<span slot="title">{{item.name}}</span>-->
-          <!--</el-menu-item>-->
-        </div>
-      </template>
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-message">
-          </i><span slot="title">导航</span>
         </template>
-        <el-menu-item index="/watch">
-          内容1
-        </el-menu-item>
-        <el-menu-item index="/render">
-          内容2
-        </el-menu-item>
-      </el-submenu>
+        <!--无子集结构 此项目并不需要-->
+        <template v-else>
+          <el-menu-item :index="index" :key="index">
+            <i :class="item.icon"></i>
+            <span slot="title">{{item.name}}</span>
+          </el-menu-item>
+        </template>
+      </template>
     </el-menu>
   </div>
 </template>
@@ -48,7 +37,6 @@
     data() {
       return {
         collapse: false,
-        list: [],
       };
     },
     computed: {
@@ -57,9 +45,6 @@
       }),
     },
     mounted() {
-      this.$nextTick(() => {
-        this.list = this.menus;
-      });
       EventBus.$on('collapse', (val) => {
         this.collapse = val;
       });

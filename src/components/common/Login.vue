@@ -23,7 +23,19 @@
           <div class="login-btn">
             <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
           </div>
-          <p class="tips">Tips : 账号请看文档。</p>
+          <el-dropdown class="tips" @command="handleCommand">
+              <span class="el-dropdown-link">
+               Tips : 账号轻戳这里。
+              </span>
+            <el-dropdown-menu slot="dropdown">
+              <template v-for="(item,index) in account">
+                <el-dropdown-item
+                  :command="item.command"
+                  :key="index">{{item.title}}
+                </el-dropdown-item>
+              </template>
+            </el-dropdown-menu>
+          </el-dropdown>
         </el-form>
       </div>
     </div>
@@ -46,6 +58,12 @@
           username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
           password: [{required: true, message: '密码不能为空', trigger: 'blur'}],
         },
+        account: [
+          {command: 'dave', title: '最高权限'},
+          {command: 'admin', title: '一级管理员'},
+          {command: 'staff', title: '二级管理员'},
+          {command: 'anyone', title: '一般用户'},
+        ],
       };
     },
     created() {
@@ -69,6 +87,9 @@
           localStorage.setItem('token', token);
           this.$emit('login', this.$router.currentRoute.query.from || '/');
         }
+      },
+      handleCommand(command) {
+        this.ruleForm.username = command;
       },
     },
   };
@@ -124,8 +145,10 @@
   }
 
   .tips {
-    font-size: 12px;
+    margin-top: 5px;
+    font-size: 14px;
     line-height: 30px;
     color: #999;
+    cursor: pointer;
   }
 </style>
