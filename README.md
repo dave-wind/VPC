@@ -22,32 +22,31 @@ $ npm run build
 ```
 ## 项目分析
 > 基本思路
-##### 构思
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前端做权限控制，无非后台传数据 前端做判断 我看了大多数项目 都有角色的概念 前端在router.beforEach 导航守卫做文章    
+#### 构思
+前端做权限控制，无非后台传数据 前端做判断 我看了大多数项目 都有角色的概念 前端在router.beforEach 导航守卫做文章    
 但当我站在巨人肩旁眺望远方的时 总结觉得 前端与业务逻辑是需要解耦的 角色的概念都是人为提出的 其实前端只看数据    
 那把权限就抽出来 就是数组 不同的身份角色 给前端不同的数组 再与本地 所有的路由做匹配 返回一个菜单 给用户展示  
   
-##### 骨架
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vue-cli 初始化项目后 基于模块化 骨架组件构成：Login + Home Header Sidebar Home  业务内容放入 Hoem content内即可  
+#### 骨架
+vue-cli 初始化项目后 基于模块化 骨架组件构成：Login + Home Header Sidebar Home  业务内容放入 Hoem content内即可  
 
-##### 登录   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vpc适用于多项目统一登录 在Login页面 登录成功 返回的有效token 在进行第二步操作 获取用户数据, 数据保存在vuex内    
-考虑到刷新问题 因此 获取用户数据 就必须放在根组件 App.vue 内, 因为Vue是单向流思想 Login 作为App的子组件 需要在Login 登录成功后    
-$emit 到App 执行callback 获取用户数据     
+#### 登录   
+VPC适用于多项目统一登录 在Login页面 登录成功 返回的有效token 在进行第二步操作 获取用户数据, 数据保存在vuex内    
+考虑到刷新问题 因此 获取用户数据 就必须放在根组件 App.vue 内, 因为Vue是单向流思想 Login 作为App的子组件 需要在Login 登录成功后$emit 到App 执行callback 获取用户数据     
 
-##### 接口mock
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面说到数据 本项目采用 easy-mock mock数据 后端数据规定采用RestFul协议 mock了多种不同身份用户  
+#### 接口mock
+上面说到数据 本项目采用 easy-mock mock数据 后端数据规定采用RestFul协议 mock了多种不同身份用户  
 登录成功返回200，token失效 401 登录成功 返回 token 通过 flyio 在header 添加token 切记这是第一次在Login页 添加 以后每次接口调用 都需 添加token  
 可在 flyio 拦截器里做
 
 
-##### 用户数据操作
+#### 用户数据操作
 返回权限数组 在App页面 通过递归 fullPath 本地所有路由 操作 获取用户有效路由 保存在 Vuex内
 
-##### 页面展示
+#### 页面展示
 在Sidebar for循环 vuex存储的有效路由并展示  Home组件展示路由具体内容  
 
-##### token失效
+#### token失效
 flyio 全局拦截响应 只要失效用户访问页面调用接口 失效状态码返回401 就跳转回login页面  
 ```js
 if (err.response.status === 401) {
@@ -155,7 +154,7 @@ Vuex 顾名思义就是管理全局变量，这里是管理 而不是只读 是�
 数据属性和访问器属性，前者: [Configurable]，[[Enumerable],[Writable],[Value] 可配置 可枚举 可复写 value  
 通常对象字面量创建 对象 var person = { name: "dave" } 就是数据属性 改变和读取的 只是 对象的 value  
 而后者 访问器属性 [Configurable]]，[[Enumerable]],[[Get]],[[Set]，在JavaScript中我们使用Object.defineProperty来定义访问器属性  
-那么在Vue里 获取 this.person 就是调用 get方法  设置就是 set方法。 Vue有自己的的 data tree 正是通过访问器属性才实现 依赖追踪 watch的  
+在Vue里 获取 this.person 就是调用 get方法  设置就是 set方法。 Vue有自己的的 data tree 正是通过访问器属性才实现 依赖追踪 watch的  
 除此 Vuex EventBus 之外 Vue.prototype.xx 以及 this.$root  和 本地存储 localStorage 操作组件变量都不具备份watch功能  
 
 4.总结：    
@@ -166,5 +165,5 @@ localStorage 也是。它可以读取设置 有人说可以用addEventListener �
 
 
 ## 事后一根烟
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本项目构建 重点不是需要丰富的后台组件 而是权限路由控制思想 只是搭建骨架  
+本项目构建 重点不是需要丰富的后台组件 而是权限路由控制思想 只是搭建骨架  
 给自己工作上做一总结 后期会多加封装组件化进项目之中，使"项目"更加充实健壮
