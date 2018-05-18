@@ -35,9 +35,7 @@ VPC适用于多项目统一登录 在Login页面 登录成功 返回的有效tok
 考虑到刷新问题 因此 获取用户数据 就必须放在根组件 App.vue 内, 因为Vue是单向流思想 Login 作为App的子组件 需要在Login 登录成功后$emit 到App 执行callback 获取用户数据     
 
 #### 接口mock
-上面说到数据 本项目采用 easy-mock mock数据 后端数据规定采用RestFul协议 mock了多种不同身份用户  
-登录成功返回200，token失效 401 登录成功 返回 token 通过 flyio 在header 添加token 切记这是第一次在Login页 添加 以后每次接口调用 都需 添加token  
-可在 flyio 拦截器里做
+上面说到数据 本项目采用 easy-mock mock数据 后端数据规定采用RestFul协议 mock了多种不同身份用户 登录成功返回200，token失效 401 登录成功 返回 token 通过 flyio 在header 添加token 切记这是第一次在Login页 添加 以后每次接口调用 都需 添加token 可在 flyio 拦截器里做
 
 
 #### 用户数据操作
@@ -148,14 +146,14 @@ if (err.response.status === 401) {
 1.Vuex：状态管理模式,集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化  
 2.EventBus: 非父子组件的通信 使用事件中心，允许组件自由交流  
 案列重现：  
-当我比如在 header里改变一个变量属性值 并要求在sidebar 和 Home 实时响应的时候如何做？    
+当我比如在该项目中Header组件里改变一个变量属性值 并要求在SideBar 和 Home组件里 响应其变化时候如何做？    
 3.分析：  
 Vuex 顾名思义就是管理全局变量，这里是管理 而不是只读 是可读，可更改 可检测的，Vue是单向流 首先介绍一下ECMAScript俩种属性：    
 数据属性和访问器属性，前者: [Configurable]，[[Enumerable],[Writable],[Value] 可配置 可枚举 可复写 value  
 通常对象字面量创建 对象 var person = { name: "dave" } 就是数据属性 改变和读取的 只是 对象的 value  
 而后者 访问器属性 [Configurable]]，[[Enumerable]],[[Get]],[[Set]，在JavaScript中我们使用Object.defineProperty来定义访问器属性  
 在Vue里 获取 this.person 就是调用 get方法  设置就是 set方法。 Vue有自己的的 data tree 正是通过访问器属性才实现 依赖追踪 watch的  
-除此 Vuex EventBus 之外 Vue.prototype.xx 以及 this.$root  和 本地存储 localStorage 操作组件变量都不具备份watch功能  
+除此 Vuex EventBus 之外 Vue.prototype.xx 以及 this.$root  和 本地存储 localStorage 操作组件变量都不具备watch功能  
 
 4.总结：    
 Vue.prototype.xx，this.$root 只是可读取的 和更改的 在Vue的原型上修改读取 但并不能watch, Vue.prototype.xx 可以写全局变量 用来做 校验证 默认值 等操作  
