@@ -24,7 +24,11 @@ request.interceptors.response.use((response, promise) => {
   NProgress.done();
   return promise.resolve(response.data);
 }, (err, promise) => {
-  Notification.error(err.response.data.msg);
+  if (err.response.status === 401) {
+    window.location.href = '/login';
+  } else {
+    Notification.error(err.response.data.msg);
+  }
   NProgress.done();
   return promise.resolve();
 });
