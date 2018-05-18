@@ -4,10 +4,10 @@
              unique-opened router
              :default-active="$route.path"
              :collapse="collapse">
-      <!--菜单栏 规定都要有子集 :index 必填index-->
+      <!--菜单栏 规定都要有子集 :index 必填index is string-->
       <template v-for="(item,index) in menus">
         <template v-if=item.children>
-          <el-submenu :index="index" :key="index">
+          <el-submenu :index="index+''" :key="index">
             <template slot="title">
               <i :class="item.icon"></i><span slot="title">{{item.name}}</span>
             </template>
@@ -20,7 +20,7 @@
         </template>
         <!--无子集结构 此项目并不需要-->
         <template v-else>
-          <el-menu-item :index="index" :key="index">
+          <el-menu-item :index="index+''" :key="index">
             <i :class="item.icon"></i>
             <span slot="title">{{item.name}}</span>
           </el-menu-item>

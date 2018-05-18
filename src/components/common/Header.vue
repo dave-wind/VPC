@@ -10,7 +10,6 @@
           <img src="static/img/dave.jpg"></div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name"
-                     trigger="click"
                      @command="handleCommand">
                     <span class="el-dropdown-link">
                         {{userInfo.name}} <i class="el-icon-caret-bottom"></i>
@@ -45,7 +44,10 @@
         }
       },
       logout() {
-        EventBus.$emit('logOut');
+        this.$confirm('确认退出吗？', '提示', {}).then(() => {
+          EventBus.$emit('logOut');
+        }).catch(() => {
+        });
       },
       collapseChage() {
         this.collapse = !this.collapse;
