@@ -32,7 +32,7 @@ module.exports = {
     }],
     // else ==> else if can use
     'no-lonely-if': 0,
-    // () => { return;}
+    // function it can () => { return;}
     'consistent-return': 0,
     // const require
     'import/newline-after-import': 'off',
