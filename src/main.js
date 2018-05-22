@@ -3,17 +3,17 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import ElementUI from 'element-ui';
-import './assets/theme-dave/index.css';
-import NProgress from 'nprogress';
 import store from './store/index';
-import 'nprogress/nprogress.css';
 import './globar';
 import Tools from './tools';
+import NProgress from 'nprogress';
+// import ElementUI from 'element-ui';
+import './assets/theme-dave/index.css';
+
 
 NProgress.configure({showSpinner: false});
 
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 Vue.use(Tools);
 Vue.config.productionTip = false;
 
