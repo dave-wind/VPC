@@ -15,7 +15,7 @@ install:
 before_script:
   - git config user.name "${USER_NAME}"
   - git config user.email "${USER_EMAIL}"
-  - git clone --branch gh-pages https://${GH_REF} dist
+  - git clone https://${GH_REF}
 
 script:
   - npm run build
