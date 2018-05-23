@@ -1,64 +1,67 @@
 <template>
   <div>
-    <h3 class="title">Vue 高级用法 (案列：查看天气)</h3>
-    <h5 class="title">免费天气接口 不支持频繁调用</h5>
+    <h3 class="title">Vue 高级用法 (案列：翻译)</h3>
     <el-row>
       <el-col :span="6">
-        <el-input v-model="cityVal" placeholder="请输入内容"></el-input>
+        <el-input v-model="config.q" placeholder="请输入内容"></el-input>
       </el-col>
-      <el-col :span="6" style="margin-left: 10px;">
+      <el-col :span="6" style="margin-left: 100px;">
         <!--无需input 引入 详情看 globar.js-->
-        <BaseButton type="info" txt="查看" @click="check('hello world')"></BaseButton>
+        <BaseButton type="info" txt="btn组件" @click="check('hello world')"></BaseButton>
       </el-col>
     </el-row>
     <el-row style="margin-top: 10px;">
-      <el-col :span="12" v-if="data">
-        <div>城市：{{city}}</div>
-        <div>温度：{{data.wendu}} ℃</div>
-      </el-col>
-      <el-col v-else>
-        {{msg}}
+      <el-col :span="12" v-if="English">
+        <div>{{English}}</div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-  import api from '@/api/weather';
+  import Md5 from 'md5';
 
+  const $ = require('jquery');
   export default {
     name: 'watch',
     data() {
       return {
-        cityVal: '',
-        data: null,
-        city: '',
-        msg: '',
+        English: '',
+        config: {
+          appKey: '3124a8d08c4cb840',
+          key: '8KhfwfVSUqZ8HOVoBsb5Lw5Y9flzzYdm',
+          salt: (new Date()).getTime(),
+          from: 'auto',
+          to: 'en',
+          q: '',
+        },
       };
     },
     methods: {
-      async getWeather() {
-        // hack
-        if (!this.cityVal || !/[\u4e00-\u9fa5]/.test(this.cityVal)) {
-          this.msg = '';
-          this.data = null;
-          return;
+      getWeather() {
+        if (!this.config.q) {
+          this.English = '';
+          return false;
         }
-        const res = await api.getWeather(this.cityVal);
-        if (!res) {
-          return;
-        }
-        const {city, data} = res;
-        this.city = city;
-        this.data = data;
-        this.msg = '未搜索到相关信息';
+        const para = {...this.config};
+        const str = this.config.appKey + this.config.q + this.config.salt + this.config.key;
+        para.sign = Md5(str);
+        $.ajax({
+          url: 'http://openapi.youdao.com/api',
+          type: 'post',
+          dataType: 'jsonp',
+          data: para,
+          success: (data) => {
+            this.English = data.translation[0];
+          },
+        });
       },
       check(msg) {
         this.$notify.info(msg);
       },
     },
     watch: {
-      cityVal: {
+      'config.q': {
         handler: 'getWeather',
         immediate: true, // 在生命周期内，将立即以表达式的当前值触发回调
       },

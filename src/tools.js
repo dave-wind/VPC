@@ -16,6 +16,9 @@ const install = (Vue) => {
       return time.getTime() < Date.now() - 8.64e7;
     },
   };
+  Vue.prototype.verifyPhone = (value) => {
+    return /^1[3-9][0-9]{9}$/.test(value);
+  };
 };
 
 export default {

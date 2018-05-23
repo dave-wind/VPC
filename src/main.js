@@ -7,13 +7,11 @@ import store from './store/index';
 import './globar';
 import Tools from './tools';
 import NProgress from 'nprogress';
-// import ElementUI from 'element-ui';
 import './assets/theme-dave/index.css';
 
 
 NProgress.configure({showSpinner: false});
 
-// Vue.use(ElementUI);
 Vue.use(Tools);
 Vue.config.productionTip = false;
 

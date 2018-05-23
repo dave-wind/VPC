@@ -27,6 +27,8 @@ module.exports = {
   externals: {
     vue: 'Vue',
     'element-ui': 'ElementUI',
+    nprogress: 'NProgress',
+    jquery: 'window.$',
   },
   output: {
     path: config.build.assetsRoot,

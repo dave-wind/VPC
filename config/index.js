@@ -9,24 +9,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/mock': {
-        target: 'https://www.easy-mock.com/mock/5af52ce18efab658654cbbfa/dave/',
-        changeOrigin: true,
-        secure: false,
-        pathRewrite: {
-          '^/mock': '/'
-        }
-      },
-      '/api': {
-        target: 'https://www.sojson.com/',
-        changeOrigin: true,
-        secure: false,
-        pathRewrite: {
-          '^/api': '/'
-        }
-      },
-    },
+    proxyTable: {},
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

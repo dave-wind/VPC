@@ -4,9 +4,9 @@
 
 import request from './request';
 const api = {
-  getMock: () => request.get('/mock/demo'),
-  getLogin: (para, cb) => request.post('/mock/login', para).then(cb),
-  getUser: (cb) => request.get('/mock/sign').then(cb),
+  getMock: () => request.get('demo'),
+  getLogin: (para, cb) => request.post('login', para).then(cb),
+  getUser: (cb) => request.get('sign').then(cb),
 };
 export default api;
 

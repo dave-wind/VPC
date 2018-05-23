@@ -39,6 +39,7 @@
         });
       },
       signin(cb) {
+        console.log(fullPath);
         const menus = this.getAllowRoute(fullPath, this.userInfo.permis);
         // 与后端规定 返回权限为 空数组 递归完成 menus 依旧不匹配 直接 403
         if (Array.isArray(menus) && menus.length === 0) {
@@ -70,7 +71,7 @@
             }
           } else {
             // 第二层结构
-            if (userRoutes.indexOf(route.meta.permission[0]) > -1) {
+            if (userRoutes.indexOf(route.meta.permission) > -1) {
               arr.push(route);
             }
           }
@@ -85,9 +86,9 @@
       },
       clearData() {
         localStorage.removeItem('token');
-        this.$store.dispatch('CLEAR_STORE', () => {
-          this.$router.push('/login');
-        });
+//        this.$store.dispatch('CLEAR_STORE', () => {
+//        });
+        this.$router.push('/login');
       },
     },
   };

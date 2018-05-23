@@ -19,12 +19,12 @@
           </el-submenu>
         </template>
         <!--无子集结构 此项目并不需要-->
-        <template v-else>
-          <el-menu-item :index="index+''" :key="index">
-            <i :class="item.icon"></i>
-            <span slot="title">{{item.name}}</span>
-          </el-menu-item>
-        </template>
+        <!--<template v-else>-->
+          <!--<el-menu-item :index="index+''" :key="index">-->
+            <!--<i :class="item.icon"></i>-->
+            <!--<span slot="title">{{item.name}}</span>-->
+          <!--</el-menu-item>-->
+        <!--</template>-->
       </template>
     </el-menu>
   </div>
