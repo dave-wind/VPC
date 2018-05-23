@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view @login="login" @clearData="clearData"></router-view>
+    <keep-alive>
+      <router-view @login="login" @clearData="clearData"></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -11,9 +13,6 @@
 
   export default {
     name: 'App',
-    data() {
-      return {};
-    },
     created() {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -81,14 +80,19 @@
       handleOut() {
         // 非父组件 用EventBus 回调callBack
         EventBus.$on('logOut', () => {
+          location.reload();
           this.clearData();
         });
       },
       clearData() {
         localStorage.removeItem('token');
-//        this.$store.dispatch('CLEAR_STORE', () => {
-//        });
-        this.$router.push('/login');
+        this.$store.dispatch('CLEAR_STORE', () => {
+          this.$router.push('/login');
+        });
+      },
+    },
+    watch: {
+      $route: () => {
       },
     },
   };

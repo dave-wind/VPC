@@ -12,15 +12,15 @@ const fullPath = [
     children: [
       {
         path: '/watch',
-        name: 'vue观察',
-        component: () => import('@/components/view/watch.vue'),
         meta: {permission: 'high-watch'},
+        component: () => import('@/components/view/watch.vue'),
+        name: 'vue观察',
       },
       {
         path: '/render',
-        name: 'render渲染',
-        component: () => import('@/components/view/render.vue'),
         meta: {permission: 'high-render'},
+        component: () => import('@/components/view/render.vue'),
+        name: 'render渲染',
       },
     ],
   },
@@ -32,9 +32,9 @@ const fullPath = [
     children: [
       {
         path: '/allocation',
-        name: '权限',
-        component: () => import('@/components/view/allocation.vue'),
         meta: {permission: 'root-allocation'},
+        component: () => import('@/components/view/allocation.vue'),
+        name: '权限',
       },
     ],
   },
