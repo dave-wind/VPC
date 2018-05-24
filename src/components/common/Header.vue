@@ -45,7 +45,7 @@
       },
       logout() {
         this.$confirm('确认退出吗？', '提示', {}).then(() => {
-          EventBus.$emit('logOut');
+          localStorage.removeItem('token');
           window.location.reload();
         }).catch(() => {
         });

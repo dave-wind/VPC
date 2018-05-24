@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade" mode="out-in">
-      <router-view @login="login" @clearData="clearData"></router-view>
+      <router-view @login="login"></router-view>
     </transition>
   </div>
 </template>
@@ -9,7 +9,6 @@
 <script>
   import {mapGetters} from 'vuex';
   import fullPath from './router/fullPath';
-  import EventBus from '@/bus';
 
   export default {
     name: 'App',
@@ -20,9 +19,6 @@
       } else {
         this.$store.dispatch('GET_USER_INFO', this.signin);
       }
-    },
-    mounted() {
-      this.handleOut();
     },
     computed: {
       ...mapGetters({
@@ -35,7 +31,7 @@
         this.$store.dispatch('GET_USER_INFO', () => {
           this.loading = false;
           this.signin(() => {
-            this.$router.push({path: newPath || '/'});
+            this.$router.push({path: newPath || '/index'});
           });
         });
       },
@@ -78,21 +74,18 @@
         });
         return arr;
       },
-      handleOut() {
-        // 非父组件 用EventBus 回调callBack
-        EventBus.$on('logOut', () => {
-          this.clearData();
-        });
-      },
+      // 监听 route 只要到login 就清除所有数据
       clearData() {
-        localStorage.removeItem('token');
-        this.$store.dispatch('CLEAR_STORE', () => {
-          this.$router.replace('/login');
-        });
+        if (this.$route.path === '/login') {
+          localStorage.removeItem('token');
+          this.$store.dispatch('CLEAR_STORE');
+        }
       },
     },
     watch: {
-      $route: () => {
+      route: {
+        handler: 'clearData',
+        immediate: false,
       },
     },
   };

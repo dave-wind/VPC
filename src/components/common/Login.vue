@@ -5,7 +5,7 @@
             height="949"
             style="position: fixed; top: 0px; left: 0px; z-index: -1;">
     </canvas>
-    <div class="login-wrap">
+    <div class="login-wrap" @keyup.enter="submitForm('ruleForm')">
       <div class="ms-login">
         <div class="ms-title">VPC</div>
         <div class="introduce">Vue Permission Control</div>
@@ -22,7 +22,7 @@
           </el-form-item>
           <div class="login-btn">
             <el-button type="primary"
-                       @click="submitForm('ruleForm')"
+                       @click.native="submitForm('ruleForm')"
                        :loading="loading">
               登录
             </el-button>
@@ -92,7 +92,7 @@
         if (token) {
           request.config.headers['Authorization'] = token;
           localStorage.setItem('token', token);
-          this.$emit('login', this.$router.currentRoute.query.from || '/');
+          this.$emit('login', this.$router.currentRoute.query.from || '/index');
         }
       },
       handleCommand(command) {
