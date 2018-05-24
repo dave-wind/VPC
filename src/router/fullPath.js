@@ -2,8 +2,25 @@
  * Created by dave on 2018/5/14.
  */
 import Home from '@/components/common/Home';
+import Index from '@/components/view/index';
+import Watch from '@/components/view/watch';
+import Render from '@/components/view/render';
+import Allocation from '@/components/view/allocation';
 
 const fullPath = [
+  {
+    path: '/',
+    name: '首页',
+    component: Home,
+    hidden: true,
+    children: [
+      {
+        path: '/index',
+        component: Index,
+        meta: {permit: true},
+      },
+    ],
+  },
   {
     path: '/',
     name: '高级用法',
@@ -12,15 +29,15 @@ const fullPath = [
     children: [
       {
         path: '/watch',
+        component: Watch,
         meta: {permission: 'high-watch'},
-        component: () => import('@/components/view/watch.vue'),
         name: 'vue观察',
       },
       {
         path: '/render',
-        meta: {permission: 'high-render'},
-        component: () => import('@/components/view/render.vue'),
         name: 'render渲染',
+        component: Render,
+        meta: {permission: 'high-render'},
       },
     ],
   },
@@ -32,9 +49,9 @@ const fullPath = [
     children: [
       {
         path: '/allocation',
-        meta: {permission: 'root-allocation'},
-        component: () => import('@/components/view/allocation.vue'),
         name: '权限',
+        component: Allocation,
+        meta: {permission: 'root-allocation'},
       },
     ],
   },

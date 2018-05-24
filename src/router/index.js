@@ -10,6 +10,11 @@ const baseRoute = [
     component: () => import('@/components/common/Login.vue'),
   },
   {
+    path: '/',
+    name: '首页',
+    redirect: '/index',
+  },
+  {
     path: '/404',
     name: '404',
     component: () => import('@/components/view/404.vue'),

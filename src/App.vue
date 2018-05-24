@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <transition name="fade" mode="out-in">
       <router-view @login="login" @clearData="clearData"></router-view>
-    </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -31,20 +31,21 @@
     },
     methods: {
       login(newPath) {
+        this.loading = true;
         this.$store.dispatch('GET_USER_INFO', () => {
+          this.loading = false;
           this.signin(() => {
             this.$router.push({path: newPath || '/'});
           });
         });
       },
       signin(cb) {
-        console.log(fullPath);
-        const menus = this.getAllowRoute(fullPath, this.userInfo.permis);
-        // 与后端规定 返回权限为 空数组 递归完成 menus 依旧不匹配 直接 403
-        if (Array.isArray(menus) && menus.length === 0) {
+        // 接口数据返回空数组 直接 403
+        if (Array.isArray(this.userInfo.permis) && this.userInfo.permis.length === 0) {
           this.$router.push({path: '/403'});
           return false;
         }
+        const menus = this.getAllowRoute(fullPath, this.userInfo.permis);
         this.$router.addRoutes(menus.concat([{
           path: '*',
           redirect: '/404',
@@ -70,7 +71,7 @@
             }
           } else {
             // 第二层结构
-            if (userRoutes.indexOf(route.meta.permission) > -1) {
+            if (route.meta.permit || userRoutes.indexOf(route.meta.permission) > -1) {
               arr.push(route);
             }
           }
@@ -80,14 +81,13 @@
       handleOut() {
         // 非父组件 用EventBus 回调callBack
         EventBus.$on('logOut', () => {
-          location.reload();
           this.clearData();
         });
       },
       clearData() {
         localStorage.removeItem('token');
         this.$store.dispatch('CLEAR_STORE', () => {
-          this.$router.push('/login');
+          this.$router.replace('/login');
         });
       },
     },

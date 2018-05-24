@@ -6,8 +6,6 @@
         <el-input v-model="config.q" placeholder="请输入内容"></el-input>
       </el-col>
       <el-col :span="6" style="margin-left: 100px;">
-        <!--无需input 引入 详情看 globar.js-->
-        <BaseButton type="info" txt="btn组件" @click="check('hello world')"></BaseButton>
       </el-col>
     </el-row>
     <el-row style="margin-top: 10px;">
@@ -55,9 +53,6 @@
             this.English = data.translation[0];
           },
         });
-      },
-      check(msg) {
-        this.$notify.info(msg);
       },
     },
     watch: {

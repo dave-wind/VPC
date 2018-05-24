@@ -49,12 +49,13 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
+    // travis CI 修改
     assetsPublicPath: '',
 
     /**
      * Source Maps
      */
-    // 05 22 修改
+    // map 修改
     productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',

@@ -21,7 +21,11 @@
                       @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
           <div class="login-btn">
-            <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+            <el-button type="primary"
+                       @click="submitForm('ruleForm')"
+                       :loading="loading">
+              登录
+            </el-button>
           </div>
           <el-dropdown class="tips" @command="handleCommand">
               <span class="el-dropdown-link">
@@ -53,6 +57,7 @@
   export default {
     data() {
       return {
+        loading: false,
         ruleForm: {...model},
         rules: {
           username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
@@ -75,7 +80,9 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.loading = true;
             api.getLogin(this.ruleForm, ({token}) => {
+              this.loading = false;
               this.handleToken(token);
             });
           }
