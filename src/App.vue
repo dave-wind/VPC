@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade" mode="out-in">
-      <router-view @login="login"></router-view>
+      <router-view @login="login" @clearData="clearData"></router-view>
     </transition>
   </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
   import {mapGetters} from 'vuex';
   import fullPath from './router/fullPath';
+  import request from '@/api/request';
 
   export default {
     name: 'App',
@@ -35,6 +36,7 @@
           });
         });
       },
+      // 获取用户有效 菜单
       signin(cb) {
         // 接口数据返回空数组 直接 403
         if (Array.isArray(this.userInfo.permis) && this.userInfo.permis.length === 0) {
@@ -74,18 +76,11 @@
         });
         return arr;
       },
-      // 监听 route 只要到login 就清除所有数据
+      // 清除所有数据
       clearData() {
-        if (this.$route.path === '/login') {
-          localStorage.removeItem('token');
-          this.$store.dispatch('CLEAR_STORE');
-        }
-      },
-    },
-    watch: {
-      route: {
-        handler: 'clearData',
-        immediate: false,
+        delete request.config.headers['Authorization'];
+        localStorage.removeItem('token');
+        this.$store.dispatch('CLEAR_STORE');
       },
     },
   };

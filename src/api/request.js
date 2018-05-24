@@ -30,7 +30,7 @@ request.interceptors.response.use((response, promise) => {
   return promise.resolve(response.data);
 }, (err, promise) => {
   if (err.response.status === 401) {
-    window.location.href = '/login';
+    window.location.href = '/#/login';
   } else {
     Notification.error({title: err.status, message: err.response.data.msg || err.message});
   }

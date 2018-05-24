@@ -47,14 +47,6 @@ VPC适用于多项目统一登录 在Login页面 登录成功 返回的有效tok
 #### 页面展示
 在Sidebar for循环 vuex存储的有效路由并展示  Home组件展示路由具体内容
 
-#### token失效
-flyio 全局拦截响应 只要失效用户访问页面调用接口 失效状态码返回401 就跳转回login页面
-```js
-if (err.response.status === 401) {
-    window.location.href = '/login';
-  }
-```
-
 
 ## 设计构图
 <img alt="" src="./screenshots/index.png"/>
@@ -140,6 +132,87 @@ if (err.response.status === 401) {
 │  README.md
 
 ```
+## 项目模块
+
+#### login
+* 项目适用与多后台系统 统一登录 一个入口 登录接口就是正常的密码登录，返回token后 保存在 Authorization 内      
+* 在App.vue 也就是根组件 router-view 内 接受子组件$emit 后 执行login方法 调用接口统一获取 权限数据 在App内完成  
+
+```html
+ <router-view @login="login" @clearData="clearData"></router-view>
+```
+
+#### 统一清除函数
+> 代码秉承一个入口一个出口的宗旨
+
+* 在header组件 logout执行后 清除token 刷新页面  
+* 因为我们在根组件App内 对有无token 会做判断 所以 logout 无需路由跳转  
+* 只要到login.vue 初始化时 就执行 clearData 清除所有数据    
+
+```js
+clearData () {
+ if (this.$route.path === '/login') {
+     delete request.config.headers['Authorization'];
+     localStorage.removeItem('token');
+     this.$store.dispatch('CLEAR_STORE');
+ }       
+}
+
+```
+
+#### token失效
+flyio 全局拦截响应 只要失效用户访问页面调用接口 失效状态码返回401 就跳转回login页面
+
+```js
+if (err.response.status === 401) {
+    window.location.href = '/#/login';
+  }
+```
+#### flyio 
+* flyio 很棒 在浏览器 node 移动端 小程序 不同环境 都可以运用 VPC在 webpack.base.conf.js 有如下配置 import 引入才正确  
+* flyio 在小程序里 走的是 wx包模块详情可看官网或 mpvue-netBar  
+
+```js
+alias: {
+  'vue$': 'vue/dist/vue.esm.js',
+  '@': resolve('src'),
+  'flyio': 'flyio/dist/npm/fly'
+    }
+    
+```
+* flyio 亲测并没有 jsonp method 目前解决跨域 都是后端 在header头里设置 Access-Control-Allow-Origin: '*'  
+* 本项目 采用 ajax jsonp（是不是又回到写jquery的时代？jquery真的很强大呀！！）
+
+#### 组件注册
+> webpack 神器啊 require.context
+* 通过 require.context 去读取指定路径下的组件 比如我们需要写很多公共的ui组件 但每次需要import 引入就很麻烦就用它吧  
+* 效果就是自动动态require组件 需要三参数 搜素的文件目录 是否搜素其子目录 以及配一个正则就完事了  
+
+
+## 打包优化
+* npm run build --report 可分析 dist包大小便于逐步击破 该死的文件  
+* config index.js productionSourceMap 以及 cssSourceMap 都改为 false 目的就是干掉 该死的map文件
+* npm install --save-dev compression-webpack-plugin 后 productionGzip 设置为true 开启亚索模式，呸 是压缩  也会减少体积 你不妨试试  
+* 异步组件 但实话告诉你们 其实异步组件 并不能 优化多少dist大小    
+* cdn 外部加载资源 webpack.base.conf.js 加上externals （虽然我tm每次都拼错）  
+```js
+ externals: {
+    vue: 'Vue',
+    'element-ui': 'ElementUI',
+    nprogress: 'NProgress',
+    jquery: 'window.$'
+  }
+  
+```
+* 接着在 index内 加载 cdn 资源 切记 所有上externals的车的 代码内部不能写 Vue.use 不然cdn加载就是扯犊子 因为Vue.use 就是Vue写插件的 会挂载在Vue原型上  
+
+
+## 自动部署
+> 详情可看 travis CI 官网
+注意:
+* webpack 配置 需要修改 在config index.js 内 build VPC 改为 assetsPublicPath: '' 而不是根目录 '/' 不然js会 404  
+* 具体 travis-CI 配置 结果不一样 详情可看官网 或 仿照VPC .travis.yml 配置
+ 
 
 
 ## 技术分析

@@ -73,6 +73,8 @@
     },
     created() {
       Dave();
+    },
+    mounted() {
       // 直接子组件直接调用 父组件定义的方法
       this.$emit('clearData');
     },
