@@ -27,7 +27,7 @@ const baseRoute = [
 ];
 
 const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: baseRoute,
 });
 

@@ -7,7 +7,7 @@
     <div class="header-right">
       <div class="header-user-con">
         <div class="user-avator">
-          <img src="static/img/dave.jpg"></div>
+          <img src="https://avatars3.githubusercontent.com/u/28003460?s=40&v=4"></div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name"
                      @command="handleCommand">
