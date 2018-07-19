@@ -27,12 +27,12 @@
       }),
     },
     methods: {
-      login(newPath) {
+      login(newPath = '/index') {
         this.loading = true;
         this.$store.dispatch('GET_USER_INFO', () => {
           this.loading = false;
           this.signin(() => {
-            this.$router.push({path: newPath || '/index'});
+            this.$router.push({path: newPath});
           });
         });
       },
